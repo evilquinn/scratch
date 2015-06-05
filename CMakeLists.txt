@@ -1,1 +1,3 @@
-add_executable( scratch main.cpp )
+project(scratch C CXX)
+
+add_subdirectory(src)
