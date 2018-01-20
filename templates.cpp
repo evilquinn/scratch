@@ -49,6 +49,17 @@ public:
     {}
 };
 
+template<typename T>
+custom_unique_ptr<T> get_custom_unique_ptr(T* const t)
+{
+    return custom_unique_ptr<T>(t);
+}
+
+template<typename T>
+std::unique_ptr<T, void(*)(T*)> get_unique_ptr(T* const t)
+{
+    return std::unique_ptr<T, void(*)(T*)>(t, custom_deleter<T>);
+}
 
 int main(int argc, char* argv[])
 {
@@ -56,7 +67,8 @@ int main(int argc, char* argv[])
     A a;
     custom_unique_ptr<A> ap(&a);
     std::unique_ptr<B> bp(std::make_unique<B>());
-    custom_unique_ptr<B> bpc(bp.get());
+
+    auto bpa = get_unique_ptr(bp.get());
 
 
 
